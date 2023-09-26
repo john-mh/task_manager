@@ -2,6 +2,8 @@ package src.model;
 
 import src.command.AddItem;
 import src.command.Command;
+import src.command.DeleteItem;
+import src.command.EditItem;
 import src.structures.HashTable;
 import src.structures.PriorityQueue;
 import src.structures.Stack;
@@ -35,13 +37,13 @@ public class TaskManager {
     }
 
     public void edit(TodoItem item, String key) {
-        Command command = new AddItem(table, item);
+        Command command = new EditItem(table, item, key);
         command.execute();
         previousCommands.push(command);
     }
 
     public void delete(TodoItem item) {
-        Command command = new AddItem(table, item);
+        Command command = new DeleteItem(table, item);
         command.execute();
         previousCommands.push(command);
     }
