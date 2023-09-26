@@ -22,8 +22,12 @@ public class TaskManager {
         this.previousCommands = new Stack<>();
     }
 
-    public TodoItem create(String title, String description, LocalDateTime limit) {
-        return new TodoItem(title, description, limit);
+    public TodoItem createTask(String title, String description, LocalDateTime limit) {
+        return new Task(title, description, limit);
+    }
+
+    public TodoItem createReminder(String title, String description, LocalDateTime limit) {
+        return new Reminder(title, description, limit);
     }
 
     public TodoItem get(String key) {
