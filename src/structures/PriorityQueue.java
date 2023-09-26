@@ -1,98 +1,73 @@
 package src.structures;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Queue;
+import java.util.ArrayList;
 
-public class PriorityQueue<E> implements Queue<E> {
+public class PriorityQueue<T extends Comparable<T>> {
 
-    @Override
+    private final ArrayList<T> heap;
+    protected int elementCount;
+
+    public PriorityQueue() {
+        heap = new ArrayList<>();
+        elementCount = 0;
+    }
+
+    public T peek() {
+        return heap.get(0);
+    }
+
     public int size() {
-        return 0;
+        return elementCount;
     }
 
-    @Override
     public boolean isEmpty() {
-        return false;
+        return elementCount == 0;
     }
 
-    @Override
-    public boolean contains(Object o) {
-        return false;
+    public void add(T item) {
+        heap.add(item);
+        siftUp(heap.size() - 1);
     }
 
-    @Override
-    public Iterator<E> iterator() {
-        return null;
+    public T poll() {
+        T min = heap.get(0);
+        swap(0, heap.size()-1);
+        heap.remove(heap.size()-1);
+        siftDown(0);
+        return min;
     }
 
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
+    private void swap(int i, int j) {
+        T temp = heap.get(i);
+        heap.set(i, heap.get(j));
+        heap.set(j, temp);
     }
 
-    @Override
-    public Object[] toArray(Object[] a) {
-        return new Object[0];
+    private void siftDown(int index) {
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
+        int min = index;
+
+        if (left < heap.size() && heap.get(left).compareTo(heap.get(min)) < 0) {
+            min = left;
+        }
+
+        if (right < heap.size() && heap.get(right).compareTo(heap.get(min)) < 0) {
+            min = right;
+        }
+
+        if (min != index) {
+            swap(index, min);
+            siftDown(min);
+        }
     }
 
-    @Override
-    public boolean add(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public boolean retainAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public boolean offer(Object o) {
-        return false;
-    }
-
-    @Override
-    public E remove() {
-        return null;
-    }
-
-    @Override
-    public E poll() {
-        return null;
-    }
-
-    @Override
-    public E element() {
-        return null;
-    }
-
-    @Override
-    public E peek() {
-        return null;
+    private void siftUp(int index) {
+        int parent = (index - 1) / 2;
+        while (index > 0 && heap.get(parent).compareTo(heap.get(index)) > 0) {
+            swap(parent, index);
+            index = parent;
+            parent = (index - 1) / 2;
+        }
     }
 }
