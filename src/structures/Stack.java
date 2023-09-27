@@ -10,6 +10,7 @@ public class Stack<E> extends Vector<E> {
     public void push(E item) {
         addElement(item);
     }
+
     public E pop() {
         E item;
         int len = size();
@@ -19,7 +20,6 @@ public class Stack<E> extends Vector<E> {
 
         return item;
     }
-
 
     public E peek() {
         int len = size();

@@ -16,8 +16,8 @@ public class TaskManager {
     private final PriorityQueue<TodoItem> queue;
     private final Stack<Command> previousCommands;
 
-    public TaskManager(PriorityQueue<TodoItem> queue) {
-        this.queue = queue;
+    public TaskManager() {
+        this.queue = new PriorityQueue<>();
         this.table = new HashTable<>();
         this.previousCommands = new Stack<>();
     }
@@ -32,6 +32,10 @@ public class TaskManager {
 
     public TodoItem get(String key) {
         return table.get(key);
+    }
+
+    public int stackSize() {
+        return previousCommands.size();
     }
 
     public void add(TodoItem item) {

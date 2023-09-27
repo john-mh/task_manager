@@ -2,7 +2,6 @@ package src.structures;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.function.Consumer;
 
 public class HashTable<K, V> implements Iterable<V> {
 
@@ -22,8 +21,5 @@ public class HashTable<K, V> implements Iterable<V> {
         return null;
     }
 
-    @Override
-    public void forEach(Consumer<? super V> action) {
-        Iterable.super.forEach(action);
-    }
+
 }

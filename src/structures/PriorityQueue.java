@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 public class PriorityQueue<T extends Comparable<T>> {
 
-    private final ArrayList<T> heap;
-    protected int elementCount;
+    protected final ArrayList heap;
+
 
     public PriorityQueue() {
-        heap = new ArrayList<>();
-        elementCount = 0;
+        heap = new Heap<>();
     }
 
     public T peek() {
@@ -17,11 +16,11 @@ public class PriorityQueue<T extends Comparable<T>> {
     }
 
     public int size() {
-        return elementCount;
+        return heap.size();
     }
 
     public boolean isEmpty() {
-        return elementCount == 0;
+        return heap.isEmpty();
     }
 
     public void add(T item) {
