@@ -29,6 +29,6 @@ public class TodoItem implements Comparable<TodoItem> {
 
     @Override
     public int compareTo(TodoItem other) {
-        return this.priority.compareTo(other.priority);
+        return Integer.compare(this.priority.getPriority(), other.priority.getPriority());
     }
 }
