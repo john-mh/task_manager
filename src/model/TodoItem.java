@@ -2,6 +2,9 @@ package src.model;
 
 import java.time.LocalDateTime;
 
+/**
+ * 
+ */
 public class TodoItem implements Comparable<TodoItem> {
 
     protected String title;
@@ -9,12 +12,19 @@ public class TodoItem implements Comparable<TodoItem> {
     protected Priority priority;
     protected LocalDateTime limit;
 
+    /**
+     * 
+     * @param title
+     * @param description
+     * @param limit
+     */
     public TodoItem(String title, String description, LocalDateTime limit) {
         this.title = title;
         this.description = description;
         this.limit = limit;
     }
 
+    
     public String getTitle() {
         return title;
     }
