@@ -18,8 +18,9 @@ public class TodoItem implements Comparable<TodoItem> {
      * @param title The title of the Todo item
      * @param description The description of the Todo item
      * @param deadline The deadline for the Todo item
+     * @param priority The priority of the Todo item
      */
-    public TodoItem(String title, String description, LocalDateTime deadline) {
+    public TodoItem(String title, String description, LocalDateTime deadline, Priority priority) {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
@@ -50,6 +51,24 @@ public class TodoItem implements Comparable<TodoItem> {
      */
     public LocalDateTime getDeadline() {
         return deadline;
+    }
+
+    /**
+     * Returns the priority for this TodoItem.
+     *
+     * @return The priority
+     */
+    public Priority getPriority() {
+        return priority;
+    }
+
+    /**
+     * Sets the priority for this TodoItem.
+     *
+     * @param priority The new priority
+     */
+    public void setPriority(Priority priority) {
+        this.priority = priority;
     }
 
     /**
