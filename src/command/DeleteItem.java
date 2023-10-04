@@ -9,6 +9,7 @@ public class DeleteItem implements Command {
     private final TodoItem item;
 
     public DeleteItem(HashTable<String, TodoItem> table, TodoItem item) {
+
         this.table = table;
         this.item = item;
     }
@@ -21,5 +22,15 @@ public class DeleteItem implements Command {
     @Override
     public void undo() {
         table.add(item);
+    }
+
+    public TodoItem searchTaskTitle(HashTable<String, TodoItem> table, String title) {
+
+        for (TodoItem item : table.values()) {
+            if (item.getTitle().equalsIgnoreCase(title)) {
+                return item;
+            }
+        }
+        return null;
     }
 }

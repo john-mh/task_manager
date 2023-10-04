@@ -12,6 +12,7 @@ public class EditItem implements Command {
 
 
     public EditItem(HashTable<String, TodoItem> table, TodoItem item, String key) {
+
         this.table = table;
         this.item = item;
         this.key = key;
@@ -20,13 +21,27 @@ public class EditItem implements Command {
 
     @Override
     public void execute() {
+
         table.remove(table.get(key));
         table.add(key, item);
     }
 
     @Override
     public void undo() {
+
         table.remove(table.get(key));
         table.add(key, oldItem);
+    }
+
+    public TodoItem searchTaskTitle(HashTable<String, TodoItem> table, String title) {
+
+        for (TodoItem item : table.values()) {
+
+            if (item.getTitle().equalsIgnoreCase(title)) {
+
+                return item;
+            }
+        }
+        return null;
     }
 }

@@ -2,6 +2,7 @@ package src.structures;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.UUID;
 
 public class HashTable<K, V> implements Iterable<V> {
 
@@ -13,6 +14,20 @@ public class HashTable<K, V> implements Iterable<V> {
      */
     public HashTable() {
 
+        for (int i = 0; i < table.length; i++) {
+            table[i] = new LinkedList<>();
+        }
+
+    }
+
+    /**
+     * Generar un UUID aleatorio como clave única
+     * @param item
+     */
+    public void add(V item) {
+         
+        String key = UUID.randomUUID().toString();
+        add(key, item);
     }
 
     /**
@@ -22,7 +37,12 @@ public class HashTable<K, V> implements Iterable<V> {
      */
     public void add(K key, V item) {
 
-        int index = calculateIndex(key);
+        int index = hash(key);
+
+        if (table[index] == null) {
+            table[index] = new LinkedList<>();
+        }
+        table[index].add(new Entry<>(key, item));
     }
 
 
@@ -53,12 +73,20 @@ public class HashTable<K, V> implements Iterable<V> {
      * @return
      */
     private int calculateIndex(K key) {
+
+        int index = key.hashCode() % table.length;
+
+        if (index < 0) {
+
+            index += table.length; // Asegura que el índice sea no negativo
+        }
         
-        return key.hashCode() % table.length;
+        return index;
     }
 
     /**
-     * 
+     *
+     * @return
      */
     @Override
     public Iterator<V> iterator() {
