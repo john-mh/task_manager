@@ -35,8 +35,9 @@ public class TaskManager {
      * @param limit
      * @return
      */
-    public TodoItem createTask(String title, String description, LocalDateTime limit) {
-        return new Task(title, description, limit);
+    public TodoItem createTask(String title, String description, LocalDateTime limit, boolean hasPriority) {
+        Priority priority = hasPriority ? Priority.PRIORITY : Priority.NON_PRIORITY;
+        return new Task(title, description, limit, priority);
     }
 
     /**
@@ -46,8 +47,9 @@ public class TaskManager {
      * @param limit
      * @return
      */
-    public TodoItem createReminder(String title, String description, LocalDateTime limit) {
-        return new Reminder(title, description, limit);
+    public TodoItem createReminder(String title, String description, LocalDateTime limit, boolean hasPriority) {
+        Priority priority = hasPriority ? Priority.PRIORITY : Priority.NON_PRIORITY;
+        return new Reminder(title, description, limit, priority);
     }
 
     /**
