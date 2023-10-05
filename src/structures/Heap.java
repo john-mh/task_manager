@@ -167,7 +167,7 @@ public class Heap<T extends Comparable<T>> {
      */
     private void siftUp(int index) {
         int parent = (index - 1) / 2;
-        while (index > 0 && heap.get(parent).compareTo(heap.get(index)) > 0) {
+        while (index > 0 && maxHeap.test(heap.get(index), heap.get(parent))) {
             swap(parent, index);
             index = parent;
             parent = (index - 1) / 2;
