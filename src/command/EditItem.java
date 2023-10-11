@@ -22,26 +22,15 @@ public class EditItem implements Command {
     @Override
     public void execute() {
 
-        table.remove(table.get(key));
+        table.remove(key);
         table.add(key, item);
     }
 
     @Override
     public void undo() {
 
-        table.remove(table.get(key));
+        table.remove(key);
         table.add(key, oldItem);
     }
 
-    public TodoItem searchTaskTitle(HashTable<String, TodoItem> table, String title) {
-
-        for (TodoItem item : table.values()) {
-
-            if (item.getTitle().equalsIgnoreCase(title)) {
-
-                return item;
-            }
-        }
-        return null;
-    }
 }
