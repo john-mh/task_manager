@@ -6,6 +6,10 @@ public class TaskManagerUi {
     private TaskManager taskManager;
     private Scanner sc;
 
+    public static void main(String [] args){
+        System.out.println("Hola");
+    }
+
     public TaskManagerUI(TaskManager taskManager) {
 
         this.taskManager = taskManager;

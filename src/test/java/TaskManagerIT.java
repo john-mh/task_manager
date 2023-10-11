@@ -1,5 +1,3 @@
-package src.test;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +12,8 @@ public class TaskManagerIT {
 
     @Test
     public void testStack() {
+
+
         Stack<Integer> stack = new Stack<>();
         Assertions.assertTrue(stack.isEmpty());
         stack.push(1);
@@ -50,5 +50,32 @@ public class TaskManagerIT {
         TaskManager taskManager = new TaskManager();
         taskManager.add(taskManager.createTask(title, description, limit));
         Assertions.assertEquals(1, taskManager.stackSize());
+    }
+
+
+    private TaskManager taskManager;
+
+    
+    @BeforeEach
+    public void setUp() {
+        taskManager = new TaskManager();
+    }
+
+    @Test
+    public void testAddAndRetrieveTask() {
+        String title = "Test Task";
+        String description = "This is a test task.";
+        LocalDateTime limit = LocalDateTime.now();
+
+        // Agregar una tarea a TaskManager
+        TodoItem task = taskManager.createTask(title, description, limit, true);
+        taskManager.add(task);
+
+        // Verificar que la tarea se haya almacenado correctamente en la tabla hash
+        TodoItem retrievedTask = taskManager.get(task.getKey());
+        Assertions.assertEquals(title, retrievedTask.getTitle());
+        Assertions.assertEquals(description, retrievedTask.getDescription());
+        Assertions.assertEquals(limit, retrievedTask.getDeadline());
+        Assertions.assertEquals(Priority.PRIORITY, retrievedTask.getPriority());
     }
 }

@@ -146,4 +146,20 @@ public class TaskManager {
         }
     }
 
+    public void addTask(TodoItem item) {
+
+        String key = UUID.randomUUID().toString();
+        table.add(key, item);
+    }
+
+    public void editTask(TodoItem item, String key) {
+        if (table.get(key) != null) {
+            table.add(key, item);
+        }
+    }
+
+    public void deleteTask(String key) {
+        table.remove(key);
+    }
+
 }

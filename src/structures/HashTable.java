@@ -53,6 +53,21 @@ public class HashTable<K, V> implements Iterable<V> {
     public void remove(K key) {
 
         int index = calculateIndex(key);
+        LinkedList<Entry<K, V>> list = table[index];
+        Entry<K, V> entryToRemove = null;
+
+        for (Entry<K, V> entry : list) {
+
+            if (entry.getKey().equals(key)) {
+
+                entryToRemove = entry;
+                break;
+            }
+        }
+        if (entryToRemove != null) {
+
+            list.remove(entryToRemove);
+        }
     }
 
     /**
@@ -61,10 +76,18 @@ public class HashTable<K, V> implements Iterable<V> {
      * @return
      */
     public V get(K key) {
-        
+
         int index = calculateIndex(key);
-        
-        return null; 
+        LinkedList<Entry<K, V>> list = table[index];
+
+        for (Entry<K, V> entry : list) {
+
+            if (entry.getKey().equals(key)) {
+
+                return entry.getValue();
+            }
+        }
+        return null;
     }
 
     /**
@@ -90,7 +113,37 @@ public class HashTable<K, V> implements Iterable<V> {
      */
     @Override
     public Iterator<V> iterator() {
-        return null;
+        return new Iterator<V>() {
+
+            private int currentList = 0;
+            private Iterator<Entry<K, V>> currentIterator = table[0].iterator();
+
+            @Override
+            public boolean hasNext() {
+
+                if (currentIterator.hasNext()) {
+
+                    return true;
+                }
+                while (currentList < table.length - 1) {
+
+                    currentList++;
+                    currentIterator = table[currentList].iterator();
+
+                    if (currentIterator.hasNext()) {
+
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public V next() {
+
+                return currentIterator.next().getValue();
+            }
+        };
     }
 
 
