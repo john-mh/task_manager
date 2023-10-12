@@ -13,10 +13,13 @@ public class TaskManagerUi {
     }
 
     public void start() {
-        System.out.println("Bienvenido al Administrador de Tareas!");
+        System.out.println("\n==========================================================================");
+        System.out.println("=============== !Bienvenido al Administrador de Tareas! ==================");
+        System.out.println("==========================================================================\n");
+        
 
         while (true) {
-            System.out.println("\nOpciones:");
+            System.out.println("Opciones:");
             System.out.println("1. Crear tarea");
             System.out.println("2. Crear recordatorio");
             System.out.println("3. Editar tarea");
@@ -55,6 +58,10 @@ public class TaskManagerUi {
 
     private void createTask() {
 
+        System.out.println("\n==========================================================================");
+        System.out.println("=========================== Crear Tarea ==================================");
+        System.out.println("==========================================================================\n");
+
         System.out.print("Porfavor ingrese el título de la tarea: ");
         String title = sc.nextLine();
         System.out.print("Porfavor ingrese la descripción de la tarea: ");
@@ -71,6 +78,9 @@ public class TaskManagerUi {
     }
 
     private void createReminder() {
+        System.out.println("\n==========================================================================");
+        System.out.println("=========================== Crear Recordatorio ===========================");
+        System.out.println("==========================================================================\n");
 
         System.out.print("Porfavor ingrese el título del recordatorio: ");
         String title = sc.nextLine();
@@ -88,6 +98,10 @@ public class TaskManagerUi {
     }
 
     private void editTask() {
+        System.out.println("\n==========================================================================");
+        System.out.println("=========================== Editar Tarea =================================");
+        System.out.println("==========================================================================\n");
+
 
         System.out.print("Porfavor ingrese el título de la tarea a editar: ");
         String titleToEdit = sc.nextLine();
@@ -116,6 +130,9 @@ public class TaskManagerUi {
     }
 
     private void deleteTask() {
+        System.out.println("\n==========================================================================");
+        System.out.println("=========================== Eliminar Tarea ===============================");
+        System.out.println("==========================================================================\n");
 
         System.out.print("Porfavor ingrese el título de la tarea a eliminar: ");
         String titleToDelete = sc.nextLine();
@@ -133,6 +150,9 @@ public class TaskManagerUi {
     }
 
     private void undo() {
+        System.out.println("\n==========================================================================");
+        System.out.println("============================= Undo =======================================");
+        System.out.println("==========================================================================\n");
 
         taskManager.undo();
         System.out.println("Operación deshecha.");
@@ -140,6 +160,8 @@ public class TaskManagerUi {
 
     private void exit() {
 
-        System.out.println("Gracias por usar el Administrador de Tareas. ¡Hasta luego!");
+        System.out.println("\n==========================================================================");
+        System.out.println("===== Gracias por usar el Administrador de Tareas. ¡Hasta luego! =========");
+        System.out.println("==========================================================================\n");
     }
 }
