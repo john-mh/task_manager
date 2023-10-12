@@ -1,4 +1,4 @@
-# Task and Reminder Management System
+# Task and Reminder Management System 📅
 
 This project is a task and reminder management system that allows users to add, organize, and manage their pending tasks and reminders. The management system includes key components and functionalities for efficient task and reminder management. Here are the main aspects of the project:
 
@@ -11,7 +11,6 @@ The system uses a hash table to store tasks and reminders. Each entry in the has
 - Description
 - Due date
 - Priority
-- Category (Priority or Non-Priority)
 
 ### User Interface
 
@@ -33,7 +32,7 @@ The system categorizes tasks into two categories:
 The project implements an "undo" function that allows users to revert actions performed in the system. The general approach to implementing this function involves:
 
 1. Creating a stack of actions to keep track of user actions.
-2. Recording each action performed by the user on the stack, including details about the action and the affected tasks.
+2. Recording each action performed by the user on the stack.
 3. Implementing a method that allows users to undo the last action. This method pops the last recorded action and reverses the corresponding action.
 
 ## How to Use the System
@@ -41,10 +40,10 @@ The project implements an "undo" function that allows users to revert actions pe
 To use this task and reminder management system, follow these steps:
 
 1. Run the application.
-2. Add new tasks or reminders, specifying title, description, due date, priority, and category.
+2. Add new tasks or reminders, specifying title, description, due date and priority.
 3. Modify existing tasks or reminders if needed.
 4. Delete tasks or reminders when they are no longer relevant.
-5. View a list of all tasks and reminders and sort them by due date or priority according to your needs.
+5. View a list of all tasks and reminders and sort them by due date or priority.
 6. Use the "Undo" function if you want to revert the last action performed.
 
 ## Technologies Used
