@@ -1,14 +1,16 @@
-package src.model;
+package model;
 
-import src.command.AddItem;
-import src.command.Command;
-import src.command.DeleteItem;
-import src.command.EditItem;
-import src.structures.HashTable;
-import src.structures.PriorityQueue;
-import src.structures.Stack;
+import command.AddItem;
+import command.Command;
+import command.DeleteItem;
+import command.EditItem;
+import structures.HashTable;
+import structures.PriorityQueue;
+import structures.Stack;
+
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 /**
  *
@@ -32,16 +34,18 @@ public class TaskManager {
         return table;
     }
 
+
     /**
      *
      * @param title
      * @param description
-     * @param limit
+     * @param deadline
+     * @param hasPriority
      * @return
      */
-    public TodoItem createTask(String title, String description, LocalDateTime limit, boolean hasPriority) {
+    public TodoItem createTask(String title, String description, LocalDateTime deadline, boolean hasPriority) {
         Priority priority = hasPriority ? Priority.PRIORITY : Priority.NON_PRIORITY;
-        return new Task(title, description, limit, priority);
+        return new Task(title, description, deadline, priority);
     }
 
     /**

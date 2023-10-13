@@ -1,4 +1,4 @@
-package src.structures;
+package structures;
 
 public class Entry<K, V> {
     private final K key;
