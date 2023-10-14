@@ -1,4 +1,4 @@
-package src.structures;
+package structures;
 
 public class PriorityQueue<T extends Comparable<T>> {
 

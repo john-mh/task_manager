@@ -1,7 +1,7 @@
-package src.command;
+package command;
 
-import src.model.TodoItem;
-import src.structures.HashTable;
+import model.TodoItem;
+import structures.HashTable;
 
 public class EditItem implements Command {
 
@@ -19,29 +19,22 @@ public class EditItem implements Command {
         this.oldItem = table.get(key);
     }
 
+    public static TodoItem searchTaskByTitle(HashTable<String, TodoItem> table, String titleToEdit) {
+        return null;
+    }
+
     @Override
     public void execute() {
 
-        table.remove(table.get(key));
+        table.remove(key);
         table.add(key, item);
     }
 
     @Override
     public void undo() {
 
-        table.remove(table.get(key));
+        table.remove(key);
         table.add(key, oldItem);
     }
 
-    public TodoItem searchTaskTitle(HashTable<String, TodoItem> table, String title) {
-
-        for (TodoItem item : table.values()) {
-
-            if (item.getTitle().equalsIgnoreCase(title)) {
-
-                return item;
-            }
-        }
-        return null;
-    }
 }

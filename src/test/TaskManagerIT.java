@@ -1,11 +1,14 @@
-package src.test;
-
+/**
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.model.TaskManager;
-import src.structures.PriorityQueue;
-import src.structures.Stack;
+import model.Priority;
+import model.TaskManager;
+import model.TodoItem;
+import structures.HashTable;
+import structures.PriorityQueue;
+import structures.Stack;
 
 import java.time.LocalDateTime;
 
@@ -48,7 +51,36 @@ public class TaskManagerIT {
         String description = "description";
         LocalDateTime limit = LocalDateTime.now();
         TaskManager taskManager = new TaskManager();
-        taskManager.add(taskManager.createTask(title, description, limit));
+        taskManager.add(taskManager.createTask(title, description, limit, true));
         Assertions.assertEquals(1, taskManager.stackSize());
     }
+
+
+    private TaskManager taskManager;
+
+    
+    @BeforeEach
+    public void setUp() {
+        taskManager = new TaskManager();
+    }
+
+    @Test
+    public void testAddAndRetrieveTask() {
+        String title = "Test Task";
+        String description = "This is a test task.";
+        LocalDateTime limit = LocalDateTime.now();
+        HashTable<String, TodoItem> table = taskManager.getTable();
+
+        // Agregar una tarea a TaskManager
+        TodoItem task = taskManager.createTask(title, description, limit, true);
+        taskManager.add(task);
+
+        // Verificar que la tarea se haya almacenado correctamente en la tabla hash
+        TodoItem retrievedTask = table.get(table.key(task));
+        Assertions.assertEquals(title, retrievedTask.getTitle());
+        Assertions.assertEquals(description, retrievedTask.getDescription());
+        Assertions.assertEquals(limit, retrievedTask.getDeadline());
+        Assertions.assertEquals(Priority.PRIORITY, retrievedTask.getPriority());
+    }
 }
+*/

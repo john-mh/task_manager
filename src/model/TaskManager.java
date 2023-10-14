@@ -1,13 +1,16 @@
-package src.model;
+package model;
 
-import src.command.AddItem;
-import src.command.Command;
-import src.command.DeleteItem;
-import src.command.EditItem;
-import src.structures.HashTable;
-import src.structures.PriorityQueue;
-import src.structures.Stack;
+import command.AddItem;
+import command.Command;
+import command.DeleteItem;
+import command.EditItem;
+import structures.HashTable;
+import structures.PriorityQueue;
+import structures.Stack;
+
 import java.time.LocalDateTime;
+import java.util.List;
+
 
 /**
  *
@@ -15,30 +18,34 @@ import java.time.LocalDateTime;
 public class TaskManager {
 
     private final HashTable<String, TodoItem> table;
-    private final PriorityQueue<TodoItem> queue;
+    private PriorityQueue<TodoItem> queue;
     private final Stack<Command> previousCommands;
 
     /**
      *
      */
     public TaskManager() {
-
         this.queue = new PriorityQueue<>();
         this.table = new HashTable<>();
         this.previousCommands = new Stack<>();
     }
 
+    public HashTable<String, TodoItem> getTable() {
+        return table;
+    }
+
+
     /**
      *
      * @param title
      * @param description
-     * @param limit
+     * @param deadline
+     * @param hasPriority
      * @return
      */
-    public TodoItem createTask(String title, String description, LocalDateTime limit, boolean hasPriority) {
-
+    public TodoItem createTask(String title, String description, LocalDateTime deadline, boolean hasPriority) {
         Priority priority = hasPriority ? Priority.PRIORITY : Priority.NON_PRIORITY;
-        return new Task(title, description, limit, priority);
+        return new Task(title, description, deadline, priority);
     }
 
     /**
@@ -49,7 +56,6 @@ public class TaskManager {
      * @return
      */
     public TodoItem createReminder(String title, String description, LocalDateTime limit, boolean hasPriority) {
-
         Priority priority = hasPriority ? Priority.PRIORITY : Priority.NON_PRIORITY;
         return new Reminder(title, description, limit, priority);
     }
@@ -61,7 +67,6 @@ public class TaskManager {
      * @return
      */
     public TodoItem get(String key) {
-
         return table.get(key);
     }
 
@@ -71,7 +76,6 @@ public class TaskManager {
      * @return
      */
     public int stackSize() {
-
         return previousCommands.size();
     }
 
@@ -80,20 +84,20 @@ public class TaskManager {
      * @param item
      */
     public void add(TodoItem item) {
-
         Command command = new AddItem(table, item);
         command.execute();
         previousCommands.push(command);
+        queue.add(item);
     }
 
     /**
      *
      * @param item
-     * @param key
      */
-    public void edit(TodoItem item, String key) {
-        Command command = new EditItem(table, item, key);
+    public void edit(TodoItem item) {
+        Command command = new EditItem(table, item, table.key(item));
         command.execute();
+        updateQueue();
         previousCommands.push(command);
     }
 
@@ -102,9 +106,9 @@ public class TaskManager {
      * @param item
      */
     public void delete(TodoItem item) {
-
-        Command command = new DeleteItem(table, item);
+        Command command = new DeleteItem(table, item, table.key(item));
         command.execute();
+        updateQueue();
         previousCommands.push(command);
     }
 
@@ -112,9 +116,7 @@ public class TaskManager {
      *
      */
     public void undo() {
-
         if (!previousCommands.isEmpty()) {
-
             Command command = previousCommands.pop();
             command.undo();
         }
@@ -125,25 +127,26 @@ public class TaskManager {
      * @param title
      * @return
      */
-    public String findTaskKeyTitle(String title) {
+    public String searchItem(String title) {
+        List<TodoItem> items = table.values();
+        List<TodoItem> matches = Searcher.searchingString(items, title, TodoItem::getTitle);
+        String key = "";
 
-        List<String> keys = new ArrayList<>();
-
-        for (TodoItem item : table.values()) {
-
-            if (item.getTitle().equalsIgnoreCase(title)) {
-
-                keys.add(item.getTitle());
-            }
+        if(!matches.isEmpty()){
+            key = table.key(matches.get(0));
         }
 
-        if (!keys.isEmpty()) {
-
-            return keys.get(0);
-        } else {
-
-            return null;
-        }
+        return key;
     }
 
+    private void updateQueue() {
+        PriorityQueue<TodoItem> newQueue = new PriorityQueue<>();
+
+        for (TodoItem item : table.values()) {
+            if (queue.poll() == item)
+                newQueue.add(item);
+        }
+
+        queue = newQueue;
+    }
 }

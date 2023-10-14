@@ -1,8 +1,8 @@
-package src.structures;
+package structures;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.UUID;
+import java.util.Objects;
 
 public class HashTable<K, V> implements Iterable<V> {
 
@@ -10,24 +10,35 @@ public class HashTable<K, V> implements Iterable<V> {
     private final LinkedList<Entry<K, V>>[] table = new LinkedList[16];
     
     /**
-     * Iniciliza la tabla hash
+     * Inicializa la tabla hash
      */
     public HashTable() {
-
         for (int i = 0; i < table.length; i++) {
             table[i] = new LinkedList<>();
         }
-
     }
 
-    /**
-     * Generar un UUID aleatorio como clave única
-     * @param item
-     */
-    public void add(V item) {
-         
-        String key = UUID.randomUUID().toString();
-        add(key, item);
+    public K key(V value) {
+        for (LinkedList<Entry<K, V>> list : table) {
+            for (Entry<K, V> entry : list) {
+                if (entry.getValue().equals(value)) {
+                    return entry.getKey();
+                }
+            }
+        }
+        return null;
+    }
+
+    public LinkedList<V> values() {
+        LinkedList<V> values = new LinkedList<>();
+
+        for (LinkedList<Entry<K, V>> list : table) {
+            for (Entry<K, V> entry : list) {
+                values.add(entry.getValue());
+            }
+        }
+
+        return values;
     }
 
     /**
@@ -36,8 +47,7 @@ public class HashTable<K, V> implements Iterable<V> {
      * @param item
      */
     public void add(K key, V item) {
-
-        int index = hash(key);
+        int index = Objects.hash(key);
 
         if (table[index] == null) {
             table[index] = new LinkedList<>();
@@ -51,8 +61,19 @@ public class HashTable<K, V> implements Iterable<V> {
      * @param key
      */
     public void remove(K key) {
-
         int index = calculateIndex(key);
+        LinkedList<Entry<K, V>> list = table[index];
+        Entry<K, V> entryToRemove = null;
+
+        for (Entry<K, V> entry : list) {
+            if (entry.getKey().equals(key)) {
+                entryToRemove = entry;
+                break;
+            }
+        }
+        if (entryToRemove != null) {
+            list.remove(entryToRemove);
+        }
     }
 
     /**
@@ -61,10 +82,15 @@ public class HashTable<K, V> implements Iterable<V> {
      * @return
      */
     public V get(K key) {
-        
         int index = calculateIndex(key);
-        
-        return null; 
+        LinkedList<Entry<K, V>> list = table[index];
+
+        for (Entry<K, V> entry : list) {
+            if (entry.getKey().equals(key)) {
+                return entry.getValue();
+            }
+        }
+        return null;
     }
 
     /**
@@ -73,14 +99,12 @@ public class HashTable<K, V> implements Iterable<V> {
      * @return
      */
     private int calculateIndex(K key) {
-
         int index = key.hashCode() % table.length;
 
         if (index < 0) {
-
             index += table.length; // Asegura que el índice sea no negativo
         }
-        
+
         return index;
     }
 
@@ -90,7 +114,32 @@ public class HashTable<K, V> implements Iterable<V> {
      */
     @Override
     public Iterator<V> iterator() {
-        return null;
+        return new Iterator<V>() {
+
+            private int currentList = 0;
+            private Iterator<Entry<K, V>> currentIterator = table[0].iterator();
+
+            @Override
+            public boolean hasNext() {
+                if (currentIterator.hasNext()) {
+                    return true;
+                }
+                while (currentList < table.length - 1) {
+                    currentList++;
+                    currentIterator = table[currentList].iterator();
+
+                    if (currentIterator.hasNext()) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public V next() {
+                return currentIterator.next().getValue();
+            }
+        };
     }
 
 

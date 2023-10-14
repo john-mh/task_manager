@@ -1,6 +1,7 @@
-package src.model;
+package model;
 
 import java.time.LocalDateTime;
+
 
 public class Task extends TodoItem {
 
