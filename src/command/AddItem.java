@@ -12,6 +12,7 @@ public class AddItem implements Command {
     private final String key;
 
     public AddItem(HashTable<String, TodoItem> table, TodoItem item) {
+
         key = UUID.randomUUID().toString();
         this.table = table;
         this.item = item;
