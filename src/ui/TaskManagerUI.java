@@ -1,22 +1,32 @@
+package ui;
+import model.TaskManager;
+import model.TodoItem;
+import command.EditItem;
+import command.DeleteItem;
+
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class TaskManagerUi {
+
+public class TaskManagerUI {
+
+
 
     private TaskManager taskManager;
     private Scanner sc;
 
     public TaskManagerUI(TaskManager taskManager) {
-
         this.taskManager = taskManager;
         this.sc = new Scanner(System.in);
     }
+
+
 
     public void start() {
         System.out.println("\n==========================================================================");
         System.out.println("=============== !Bienvenido al Administrador de Tareas! ==================");
         System.out.println("==========================================================================\n");
-        
+
 
         while (true) {
             System.out.println("Opciones:");
@@ -29,7 +39,7 @@ public class TaskManagerUi {
             System.out.print("Seleccione una opción: ");
 
             int choice = sc.nextInt();
-            scanner.nextLine();
+            sc.nextLine();
 
             switch (choice) {
                 case 1:
@@ -67,12 +77,12 @@ public class TaskManagerUi {
         System.out.print("Porfavor ingrese la descripción de la tarea: ");
         String description = sc.nextLine();
         System.out.print("Porfavor ingrese la fecha límite de la tarea (AAAA-MM-DD HH:mm): ");
-        LocalDateTime deadline = LocalDateTime.parse(scanner.nextLine());
+        LocalDateTime deadline = LocalDateTime.parse(sc.nextLine());
         System.out.print("¿La tarea tiene prioridad? (S/N): ");
         boolean hasPriority = sc.nextLine().equalsIgnoreCase("S");
 
         TodoItem task = taskManager.createTask(title, description, deadline, hasPriority);
-        taskManager.addTask(task);
+        taskManager.add(task);
 
         System.out.println("¡La tarea ha sido creada exitosamente!");
     }
@@ -87,12 +97,12 @@ public class TaskManagerUi {
         System.out.print("Porfavor ingrese la descripción del recordatorio: ");
         String description = sc.nextLine();
         System.out.print("Porfavor ingrese la fecha límite del recordatorio (AAAA-MM-DD HH:mm): ");
-        LocalDateTime deadline = LocalDateTime.parse(scanner.nextLine());
+        LocalDateTime deadline = LocalDateTime.parse(sc.nextLine());
         System.out.print("¿El recordatorio tiene prioridad? (S/N): ");
         boolean hasPriority = sc.nextLine().equalsIgnoreCase("S");
 
         TodoItem reminder = taskManager.createReminder(title, description, deadline, hasPriority);
-        taskManager.addTask(reminder);
+        taskManager.add(reminder);
 
         System.out.println("¡El recordatorio ha sido creado exitosamente!");
     }
@@ -111,13 +121,13 @@ public class TaskManagerUi {
         if (taskToEdit != null) {
 
             System.out.print("Porfavor ingrese el nuevo título de la tarea: ");
-            String newTitle = scanner.nextLine();
+            String newTitle = sc.nextLine();
             System.out.print("Porfavor ingrese la nueva descripción de la tarea: ");
-            String newDescription = scanner.nextLine();
+            String newDescription = sc.nextLine();
             System.out.print("Porfavor ingrese la nueva fecha límite de la tarea (AAAA-MM-DD HH:mm): ");
-            LocalDateTime newDeadline = LocalDateTime.parse(scanner.nextLine());
+            LocalDateTime newDeadline = LocalDateTime.parse(sc.nextLine());
             System.out.print("¿La tarea tiene prioridad? (S/N): ");
-            boolean newHasPriority = scanner.nextLine().equalsIgnoreCase("S");
+            boolean newHasPriority = sc.nextLine().equalsIgnoreCase("S");
 
             TodoItem newTask = taskManager.createTask(newTitle, newDescription, newDeadline, newHasPriority);
 
@@ -139,14 +149,7 @@ public class TaskManagerUi {
 
         TodoItem taskToDelete = DeleteItem.searchTaskByTitle(taskManager.getTable(), titleToDelete);
 
-        if (taskToDelete != null) {
 
-            DeleteItem deleteCommand = new DeleteItem(taskManager.getTable(), taskToDelete);
-            deleteCommand.execute();
-            System.out.println("¡La tarea fue eliminada exitosamente!");
-        } else {
-            System.out.println("Tarea no encontrada.");
-        }
     }
 
     private void undo() {
@@ -163,5 +166,13 @@ public class TaskManagerUi {
         System.out.println("\n==========================================================================");
         System.out.println("===== Gracias por usar el Administrador de Tareas. ¡Hasta luego! =========");
         System.out.println("==========================================================================\n");
+    }
+
+    public static void main (String [] args){
+
+        TaskManager taskManager = new TaskManager(); // Crea una instancia de TaskManager o inicializa como lo haces en tu código
+        TaskManagerUI taskManagerUI = new TaskManagerUI(taskManager);
+        taskManagerUI.start();
+
     }
 }
