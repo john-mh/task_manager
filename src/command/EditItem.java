@@ -19,6 +19,10 @@ public class EditItem implements Command {
         this.oldItem = table.get(key);
     }
 
+    public static TodoItem searchTaskByTitle(HashTable<String, TodoItem> table, String titleToEdit) {
+        return null;
+    }
+
     @Override
     public void execute() {
 

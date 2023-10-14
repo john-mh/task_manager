@@ -15,6 +15,10 @@ public class DeleteItem implements Command {
         this.key = key;
     }
 
+    public static TodoItem searchTaskByTitle(HashTable<String, TodoItem> table, String titleToDelete) {
+        return null;
+    }
+
     @Override
     public void execute() {
         table.remove(key);
