@@ -105,6 +105,8 @@ public class HashTable<K, V> implements Iterable<V> {
         return null;
     }
 
+
+
     /**
      * Calcula el índice en función de la clave
      * @param key

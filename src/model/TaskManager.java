@@ -52,6 +52,7 @@ public class TaskManager {
         return new Task(title, description, deadline, priority);
     }
 
+
     /**
      *
      * @param title
@@ -79,6 +80,7 @@ public class TaskManager {
      * @return
      */
     public int stackSize() {
+
         return previousCommands.size();
     }
 
@@ -99,7 +101,13 @@ public class TaskManager {
         command.execute();
         updateQueue();
         previousCommands.push(command);
+        // Asegúrate de que el oldItem se actualiza con los datos de newItem.
+        oldItem.setTitle(newItem.getTitle());
+        oldItem.setDescription(newItem.getDescription());
+        oldItem.setPriority(newItem.getPriority());
+        oldItem.setDeadline(newItem.getDeadline());
     }
+
 
     /**
      *

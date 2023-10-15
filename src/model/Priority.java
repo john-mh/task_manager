@@ -13,5 +13,8 @@ public enum Priority {
     public int getPriority() {
         return priority;
     }
+    public boolean isPriority() {
+        return this == PRIORITY;
+    }
 
 }

@@ -28,7 +28,6 @@ public class TodoItem implements Comparable<TodoItem> {
     }
 
 
-
     /**
      * Returns the title of this TodoItem.
      *
@@ -36,6 +35,18 @@ public class TodoItem implements Comparable<TodoItem> {
      */
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(final String title) {
+        this.title = title;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    public void setDeadline(final LocalDateTime deadline) {
+        this.deadline = deadline;
     }
 
     /**
@@ -74,6 +85,8 @@ public class TodoItem implements Comparable<TodoItem> {
         this.priority = priority;
     }
 
+
+
     /**
      * Compares this TodoItem with another one based on priority.
      *
@@ -89,4 +102,5 @@ public class TodoItem implements Comparable<TodoItem> {
     public String toString() {
         return title;
     }
+
 }

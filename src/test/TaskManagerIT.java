@@ -1,63 +1,18 @@
-/**
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import model.Priority;
 import model.TaskManager;
 import model.TodoItem;
-import structures.HashTable;
-import structures.PriorityQueue;
-import structures.Stack;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TaskManagerIT {
 
-    @Test
-    public void testStack() {
-        Stack<Integer> stack = new Stack<>();
-        Assertions.assertTrue(stack.isEmpty());
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
-        Assertions.assertEquals(3, stack.size());
-        Assertions.assertFalse(stack.isEmpty());
-        Assertions.assertEquals(3, stack.peek());
-        Assertions.assertEquals(3, stack.pop());
-        Assertions.assertNotEquals(1, (int) stack.pop());
-    }
-
-    @Test
-    public void testPriorityQueue() {
-        PriorityQueue<Integer> queue = new PriorityQueue<>();
-        Assertions.assertTrue(queue.isEmpty());
-        queue.add(1);
-        queue.add(2);
-        queue.add(3);
-        Assertions.assertEquals(3, queue.size());
-        Assertions.assertFalse(queue.isEmpty());
-        Assertions.assertEquals(1, queue.peek());
-        Assertions.assertEquals(1, queue.poll());
-//Assertions.assertNotEquals(1, (int) queue.poll());
-        Assertions.assertEquals(2, queue.size());
-        Assertions.assertEquals(2, queue.poll());
-    }
-
-    @Test
-    public void testAddItem() {
-        String title = "title";
-        String description = "description";
-        LocalDateTime limit = LocalDateTime.now();
-        TaskManager taskManager = new TaskManager();
-        taskManager.add(taskManager.createTask(title, description, limit, true));
-        Assertions.assertEquals(1, taskManager.stackSize());
-    }
-
-
     private TaskManager taskManager;
-
 
     @BeforeEach
     public void setUp() {
@@ -65,22 +20,66 @@ public class TaskManagerIT {
     }
 
     @Test
-    public void testAddAndRetrieveTask() {
-        String title = "Test Task";
-        String description = "This is a test task.";
-        LocalDateTime limit = LocalDateTime.now();
-        HashTable<String, TodoItem> table = taskManager.getTable();
+    public void testCreateTask() {
+        TodoItem task = taskManager.createTask("Test Task", "This is a test task.", LocalDateTime.now(), true);
+        assertNotNull(task);
+        assertEquals("Test Task", task.getTitle());
+        assertEquals("This is a test task.", task.getDescription());
+        assertNotNull(task.getDeadline());
+        assertTrue(task.getPriority() == Priority.PRIORITY);
+    }
 
-// Agregar una tarea a TaskManager
-        TodoItem task = taskManager.createTask(title, description, limit, true);
+
+
+
+    @Test
+    public void testCreateReminder() {
+        TodoItem reminder = taskManager.createReminder("Test Reminder", "This is a test reminder.", LocalDateTime.now(), false);
+        assertNotNull(reminder);
+        assertEquals("Test Reminder", reminder.getTitle());
+        assertEquals("This is a test reminder.", reminder.getDescription());
+        assertNotNull(reminder.getDeadline());
+        assertEquals(Priority.NON_PRIORITY, reminder.getPriority()); // Use assertEquals to compare enums
+    }
+
+    @Test
+    public void testAddTask() {
+        TodoItem task = taskManager.createTask("Test Task", "This is a test task.", LocalDateTime.now(), true);
+        taskManager.add(task);
+        assertEquals(1, taskManager.stackSize());
+    }
+
+    @Test
+    public void testEditTask() {
+        TodoItem task = taskManager.createTask("Test Task", "This is a test task.", LocalDateTime.now(), true);
         taskManager.add(task);
 
-// Verificar que la tarea se haya almacenado correctamente en la tabla hash
-        TodoItem retrievedTask = table.get(table.key(task));
-        Assertions.assertEquals(title, retrievedTask.getTitle());
-        Assertions.assertEquals(description, retrievedTask.getDescription());
-        Assertions.assertEquals(limit, retrievedTask.getDeadline());
-        Assertions.assertEquals(Priority.PRIORITY, retrievedTask.getPriority());
+        TodoItem newTask = taskManager.createTask("Updated Task", "This is an updated task.", LocalDateTime.now(), false);
+        taskManager.edit(task, newTask);
+
+        TodoItem updatedTask = taskManager.get(taskManager.getTable().key(task));  // Obtén la tarea actualizada
+
+        assertEquals("Updated Task", updatedTask.getTitle());
+        assertEquals("This is an updated task.", updatedTask.getDescription());
+        assertEquals(Priority.NON_PRIORITY, updatedTask.getPriority());
+    }
+
+
+
+
+    @Test
+    public void testDeleteTask() {
+        TodoItem task = taskManager.createTask("Test Task", "This is a test task.", LocalDateTime.now(), true);
+        taskManager.add(task);
+        taskManager.delete(task);
+        assertEquals(0, taskManager.stackSize());
+    }
+
+    @Test
+    public void testUndo() {
+        TodoItem task = taskManager.createTask("Test Task", "This is a test task.", LocalDateTime.now(), true);
+        taskManager.add(task);
+        taskManager.undo();
+        assertEquals(0, taskManager.stackSize());
     }
 }
-*/
