@@ -131,7 +131,7 @@ public class TaskManager {
      * @return
      */
     public List<TodoItem> searchItem(String title) {
-        return Searcher.searchingString(table.values(), title, TodoItem::getTitle);
+        return Searcher.searchingByCondition(table.values(), TodoItem::getTitle, String::contains, title);
     }
 
     private void updateQueue() {
