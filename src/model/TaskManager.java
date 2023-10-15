@@ -1,12 +1,12 @@
-package model;
+package src.model;
 
-import command.AddItem;
-import command.Command;
-import command.DeleteItem;
-import command.EditItem;
-import structures.HashTable;
-import structures.PriorityQueue;
-import structures.Stack;
+import src.command.AddItem;
+import src.command.Command;
+import src.command.DeleteItem;
+import src.command.EditItem;
+import src.structures.HashTable;
+import src.structures.PriorityQueue;
+import src.structures.Stack;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,6 +32,10 @@ public class TaskManager {
 
     public HashTable<String, TodoItem> getTable() {
         return table;
+    }
+
+    public TodoItem getItem(List<?> list, int index) {
+        return (TodoItem) list.get(index);
     }
 
 
@@ -70,7 +74,6 @@ public class TaskManager {
         return table.get(key);
     }
 
-
     /**
      *
      * @return
@@ -94,8 +97,8 @@ public class TaskManager {
      *
      * @param item
      */
-    public void edit(TodoItem item) {
-        Command command = new EditItem(table, item, table.key(item));
+    public void edit(TodoItem oldItem, TodoItem newItem) {
+        Command command = new EditItem(table, newItem, table.key(oldItem));
         command.execute();
         updateQueue();
         previousCommands.push(command);
@@ -127,16 +130,8 @@ public class TaskManager {
      * @param title
      * @return
      */
-    public String searchItem(String title) {
-        List<TodoItem> items = table.values();
-        List<TodoItem> matches = Searcher.searchingString(items, title, TodoItem::getTitle);
-        String key = "";
-
-        if(!matches.isEmpty()){
-            key = table.key(matches.get(0));
-        }
-
-        return key;
+    public List<TodoItem> searchItem(String title) {
+        return Searcher.searchingString(table.values(), title, TodoItem::getTitle);
     }
 
     private void updateQueue() {
