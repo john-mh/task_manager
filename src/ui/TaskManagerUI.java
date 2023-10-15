@@ -1,6 +1,6 @@
-package src.ui;
+package ui;
 
-import src.model.TaskManager;
+import model.TaskManager;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;

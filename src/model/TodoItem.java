@@ -1,4 +1,4 @@
-package src.model;
+package model;
 
 import java.time.LocalDateTime;
 
@@ -13,18 +13,21 @@ public class TodoItem implements Comparable<TodoItem> {
     protected LocalDateTime deadline;
 
     /**
-     * Constructs a TodoItem with the given title, description and limit date.
+     * Constructs a TodoItem with the given title, description, limit date, and priority.
      *
-     * @param title The title of the Todo item
+     * @param title       The title of the Todo item
      * @param description The description of the Todo item
-     * @param deadline The deadline for the Todo item
-     * @param priority The priority of the Todo item
+     * @param deadline    The deadline for the Todo item
+     * @param priority    The priority of the Todo item
      */
     public TodoItem(String title, String description, LocalDateTime deadline, Priority priority) {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
+        this.priority = priority; // Initialize the priority
     }
+
+
 
     /**
      * Returns the title of this TodoItem.

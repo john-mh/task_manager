@@ -1,7 +1,7 @@
-package src.command;
+package command;
 
-import src.model.TodoItem;
-import src.structures.HashTable;
+import model.TodoItem;
+import structures.HashTable;
 
 import java.util.UUID;
 
@@ -27,6 +27,4 @@ public class AddItem implements Command {
     public void undo() {
         table.remove(key);
     }
-
-
 }

@@ -1,12 +1,12 @@
-package src.model;
+package model;
 
-import src.command.AddItem;
-import src.command.Command;
-import src.command.DeleteItem;
-import src.command.EditItem;
-import src.structures.HashTable;
-import src.structures.PriorityQueue;
-import src.structures.Stack;
+import command.AddItem;
+import command.Command;
+import command.DeleteItem;
+import command.EditItem;
+import structures.HashTable;
+import structures.PriorityQueue;
+import structures.Stack;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -93,10 +93,7 @@ public class TaskManager {
         queue.add(item);
     }
 
-    /**
-     *
-     * @param item
-     */
+
     public void edit(TodoItem oldItem, TodoItem newItem) {
         Command command = new EditItem(table, newItem, table.key(oldItem));
         command.execute();

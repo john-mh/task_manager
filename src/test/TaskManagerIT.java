@@ -40,7 +40,7 @@ public class TaskManagerIT {
         Assertions.assertFalse(queue.isEmpty());
         Assertions.assertEquals(1, queue.peek());
         Assertions.assertEquals(1, queue.poll());
-        //Assertions.assertNotEquals(1, (int) queue.poll());
+//Assertions.assertNotEquals(1, (int) queue.poll());
         Assertions.assertEquals(2, queue.size());
         Assertions.assertEquals(2, queue.poll());
     }
@@ -58,7 +58,7 @@ public class TaskManagerIT {
 
     private TaskManager taskManager;
 
-    
+
     @BeforeEach
     public void setUp() {
         taskManager = new TaskManager();
@@ -71,11 +71,11 @@ public class TaskManagerIT {
         LocalDateTime limit = LocalDateTime.now();
         HashTable<String, TodoItem> table = taskManager.getTable();
 
-        // Agregar una tarea a TaskManager
+// Agregar una tarea a TaskManager
         TodoItem task = taskManager.createTask(title, description, limit, true);
         taskManager.add(task);
 
-        // Verificar que la tarea se haya almacenado correctamente en la tabla hash
+// Verificar que la tarea se haya almacenado correctamente en la tabla hash
         TodoItem retrievedTask = table.get(table.key(task));
         Assertions.assertEquals(title, retrievedTask.getTitle());
         Assertions.assertEquals(description, retrievedTask.getDescription());

@@ -1,8 +1,7 @@
-package src.structures;
+package structures;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Objects;
 
 public class HashTable<K, V> implements Iterable<V> {
 
@@ -44,18 +43,29 @@ public class HashTable<K, V> implements Iterable<V> {
     }
 
     /**
-     * Agrega el elemento en la posición index de la lista enlazada correspondiente
+     *
      * @param key
      * @param item
      */
     public void add(K key, V item) {
-        int index = Objects.hash(key);
+        int index = calculateIndex(key);
 
         if (table[index] == null) {
             table[index] = new LinkedList<>();
         }
+
+        for (Entry<K, V> entry : table[index]) {
+            if (entry.key().equals(key)) {
+
+                table[index].remove(entry);
+                break;
+            }
+        }
+
         table[index].add(new Entry<>(key, item));
     }
+
+
 
 
     /**
