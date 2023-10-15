@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class TaskManagerUI {
 
-    private static final TaskManager taskManager = new TaskManager();
-    private static final Scanner sc = new Scanner(System.in);
+    public static TaskManager taskManager = new TaskManager();
+    private static Scanner sc = new Scanner(System.in);
 
     public static void start() {
         System.out.println("\n==========================================================================");
@@ -50,7 +50,7 @@ public class TaskManagerUI {
         }
     }
 
-    private static void createTask() {
+    public static void createTask() {
 
         System.out.println("\n==========================================================================");
         System.out.println("=========================== Crear Tarea ==================================");
@@ -103,7 +103,7 @@ public class TaskManagerUI {
         System.out.println("¡El recordatorio ha sido creado exitosamente!");
     }
 
-    private static void editTask() {
+    public static void editTask() {
         System.out.println("\n==========================================================================");
         System.out.println("=========================== Editar Tarea =================================");
         System.out.println("==========================================================================\n");
@@ -144,7 +144,7 @@ public class TaskManagerUI {
 
     }
 
-    private static void deleteTask() {
+    public static void deleteTask() {
         System.out.println("\n==========================================================================");
         System.out.println("=========================== Eliminar Tarea ===============================");
         System.out.println("==========================================================================\n");
@@ -154,7 +154,7 @@ public class TaskManagerUI {
 
         List<?> tasks = taskManager.searchItem(taskTitle);
 
-        if(tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             System.out.println("Tarea no encontrada.");
         } else {
             printResults(tasks);
@@ -163,18 +163,22 @@ public class TaskManagerUI {
 
             int index = sc.nextInt();
 
-            while(index < 0 || index >= tasks.size()) {
+            while (index < 0 || index >= tasks.size()) {
                 System.out.println("Índice inválido.");
                 System.out.print("Por favor ingrese el índice de la tarea a eliminar: ");
                 index = sc.nextInt();
             }
 
-            taskManager.delete(taskManager.getItem(tasks, index));
-            System.out.println("¡La tarea fue eliminada exitosamente!");
+            // Verifica que la lista no esté vacía antes de intentar eliminar
+            if (!taskManager.getTable().isEmpty()) {
+                taskManager.delete(taskManager.getItem(tasks, index));
+                System.out.println("¡La tarea fue eliminada exitosamente!");
+            }
         }
     }
 
-    private static void undo() {
+
+    public static void undo() {
         System.out.println("\n==========================================================================");
         System.out.println("============================= Undo =======================================");
         System.out.println("==========================================================================\n");

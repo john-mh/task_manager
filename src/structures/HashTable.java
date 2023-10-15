@@ -122,6 +122,34 @@ public class HashTable<K, V> implements Iterable<V> {
         return index;
     }
 
+    public int size() {
+        int size = 0;
+
+        for (LinkedList<Entry<K, V>> list : table) {
+            size += list.size();
+        }
+
+        return size;
+    }
+
+    public V peek() {
+        if (table[0].isEmpty()) {
+            return null;
+        }
+
+        assert table[0].peek() != null;
+        return table[0].peek().value();
+    }
+
+    public boolean isEmpty() {
+        for (LinkedList<Entry<K, V>> list : table) {
+            if (!list.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      *
      * @return
