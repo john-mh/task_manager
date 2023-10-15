@@ -44,7 +44,8 @@ public interface Searcher<T> {
      * @return A list of matches found in the Collection
      * @see java.util.Collection
      */
-    static <T> List<T> searchingInt(@NotNull List<T> list, Integer value, Function<T, Integer> fieldGetter) {
+    public static <T> List<T> searchingInt(@NotNull List<T> list, Integer value, Function<T, Integer> fieldGetter) {
+
         list.sort(Comparator.comparing(fieldGetter));
         List<Integer> indexes = binarySearch(list, value, fieldGetter, Comparator.comparingInt(Integer::intValue));
         return collectMatches(list, indexes);
@@ -61,7 +62,8 @@ public interface Searcher<T> {
      * @return A list of matches found in the Collection
      * @see java.util.Collection
      */
-    static <T> List<T> searchingDouble(@NotNull List<T> list, double value, Function<T, Double> fieldGetter) {
+    public static <T> List<T> searchingDouble(@NotNull List<T> list, double value, Function<T, Double> fieldGetter) {
+
         list.sort(Comparator.comparing(fieldGetter));
         List<Integer> indexes = binarySearch(list, value, fieldGetter, Comparator.comparingDouble(Double::doubleValue));
         return collectMatches(list, indexes);
@@ -78,7 +80,8 @@ public interface Searcher<T> {
      * @return A list of matches found in the Collection
      * @see java.util.Collection
      */
-    static <T> List<T> searchingString(@NotNull List<T> list, String query, Function<T, String> fieldGetter) {
+    public static <T> List<T> searchingString(@NotNull List<T> list, String query, Function<T, String> fieldGetter) {
+
         list.sort(Comparator.comparing(fieldGetter));
         List<Integer> indexes = binarySearch(list, query, fieldGetter, String::compareToIgnoreCase);
         return collectMatches(list, indexes);
@@ -94,7 +97,8 @@ public interface Searcher<T> {
      * @param <T>         the type of the searchable objects
      * @return a list of objects that have the specified date value
      */
-    static <T> List<T> searchingDate(@NotNull List<T> list, LocalDate value, Function<T, LocalDate> fieldGetter) {
+    public static <T> List<T> searchingDate(@NotNull List<T> list, LocalDate value, Function<T, LocalDate> fieldGetter) {
+
         list.sort(Comparator.comparing(fieldGetter));
         List<Integer> indexes = binarySearch(list, value, fieldGetter, Comparator.naturalOrder());
         return collectMatches(list, indexes);
@@ -111,7 +115,8 @@ public interface Searcher<T> {
      * @param <T>         the type of the searchable objects
      * @return a list of objects that have a value within the specified range
      */
-    static <T> List<T> searchingByRange(@NotNull List<T> list, double lowerBound, double upperBound, Function<T, Double> fieldGetter) {
+    public static <T> List<T> searchingByRange(@NotNull List<T> list, double lowerBound, double upperBound, Function<T, Double> fieldGetter) {
+
         list.sort(Comparator.comparing(fieldGetter));
         List<Integer> indexes = binarySearchInRange(list, fieldGetter, lowerBound, upperBound);
         return collectMatches(list, indexes);
@@ -129,7 +134,8 @@ public interface Searcher<T> {
      * @param <U>         the type of the value to compare
      * @return a list of objects that meet the specified condition
      */
-    static <T, U extends Comparable<? super U>> List<T> searchingByCondition(@NotNull List<T> list, Function<T, U> fieldGetter, BiPredicate<U, U> condition, U target) {
+    public static <T, U extends Comparable<? super U>> List<T> searchingByCondition(@NotNull List<T> list, Function<T, U> fieldGetter, BiPredicate<U, U> condition, U target) {
+
         list.sort(Comparator.comparing(fieldGetter));
         List<Integer> indexes = binarySearchByCondition(list, fieldGetter, condition, target);
         return collectMatches(list, indexes);
@@ -149,7 +155,8 @@ public interface Searcher<T> {
      * @see java.util.Comparator
      * @see java.util.function.Function
      */
-    static <T, U> List<Integer> binarySearch(List<T> list, U target, Function<T, U> keyExtractor, Comparator<? super U> comparator) {
+    public static <T, U> List<Integer> binarySearch(List<T> list, U target, Function<T, U> keyExtractor, Comparator<? super U> comparator) {
+
         List<Integer> indexes = new ArrayList<>();
         int left = 0, right = list.size() - 1;
 
@@ -194,7 +201,8 @@ public interface Searcher<T> {
      * @return a list of indexes of the elements that have a value within the specified range
      * @see java.util.function.Function
      */
-    static <T> List<Integer> binarySearchInRange(List<T> list, Function<T, Double> fieldGetter, double low, double high) {
+    public static <T> List<Integer> binarySearchInRange(List<T> list, Function<T, Double> fieldGetter, double low, double high) {
+
         List<Integer> result = new ArrayList<>();
         int left = 0, right = list.size() - 1;
 
@@ -239,7 +247,8 @@ public interface Searcher<T> {
      * @see java.util.function.Function
      * @see java.util.function.BiPredicate
      */
-    static <T, U extends Comparable<? super U>> List<Integer> binarySearchByCondition(List<T> list, Function<T, U> fieldGetter, BiPredicate<U, U> condition, U target){
+    public static <T, U extends Comparable<? super U>> List<Integer> binarySearchByCondition(List<T> list, Function<T, U> fieldGetter, BiPredicate<U, U> condition, U target){
+
         List<Integer> result = new ArrayList<>();
         int left = 0, right = list.size() - 1;
 
@@ -280,7 +289,8 @@ public interface Searcher<T> {
      * @param <T>     the type of the list elements
      * @return a list of the elements at the specified indexes
      */
-    static <T> List<T> collectMatches(List<T> list, List<Integer> indexes){
+    public static <T> List<T> collectMatches(List<T> list, List<Integer> indexes){
+
         if(indexes.isEmpty())
             return null;
         else {

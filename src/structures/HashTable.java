@@ -3,22 +3,33 @@ package structures;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+/**
+ * Class that implements the hash table
+ * @param <K>
+ * @param <V>
+ */
 public class HashTable<K, V> implements Iterable<V> {
 
     @SuppressWarnings("unchecked")
     private final LinkedList<Entry<K, V>>[] table = new LinkedList[16];
-    
+
     /**
-     * Inicializa la tabla hash
+     * This is the hash table constructor
      */
     public HashTable() {
+
         for (int i = 0; i < table.length; i++) {
             table[i] = new LinkedList<>();
         }
     }
 
 
-
+    /**
+     * Searches for a key based on a given value.
+     * If scours all linked lists and records looking for a match on the value
+     * @param value
+     * @return
+     */
     public K key(V value) {
         for (LinkedList<Entry<K, V>> list : table) {
             for (Entry<K, V> entry : list) {
@@ -30,7 +41,12 @@ public class HashTable<K, V> implements Iterable<V> {
         return null;
     }
 
+    /**
+     * Returns a list containing all values stored in the hash table
+     * @return
+     */
     public LinkedList<V> values() {
+
         LinkedList<V> values = new LinkedList<>();
 
         for (LinkedList<Entry<K, V>> list : table) {
@@ -43,11 +59,13 @@ public class HashTable<K, V> implements Iterable<V> {
     }
 
     /**
-     *
+     * Adds a key-value pair to the hash table.
+     * It calculates the table index based on the key and adds the new record to the corresponding linked list.
      * @param key
      * @param item
      */
     public void add(K key, V item) {
+
         int index = calculateIndex(key);
 
         if (table[index] == null) {
@@ -69,10 +87,11 @@ public class HashTable<K, V> implements Iterable<V> {
 
 
     /**
-     * Elimina el elemento en la posición index de la lista enlazada correspondiente
+     * Removes an item from the hash table based on its key.
      * @param key
      */
     public void remove(K key) {
+
         int index = calculateIndex(key);
         LinkedList<Entry<K, V>> list = table[index];
         Entry<K, V> entryToRemove = null;
@@ -89,11 +108,12 @@ public class HashTable<K, V> implements Iterable<V> {
     }
 
     /**
-     * 
+     * Gets the value associated with a specific key
      * @param key
      * @return
      */
     public V get(K key) {
+
         int index = calculateIndex(key);
         LinkedList<Entry<K, V>> list = table[index];
 
@@ -108,21 +128,27 @@ public class HashTable<K, V> implements Iterable<V> {
 
 
     /**
-     * Calcula el índice en función de la clave
+     * Calculates the index based on the key
      * @param key
      * @return
      */
     private int calculateIndex(K key) {
+
         int index = key.hashCode() % table.length;
 
         if (index < 0) {
-            index += table.length; // Asegura que el índice sea no negativo
+            index += table.length;
         }
 
         return index;
     }
 
+    /**
+     * Returns the total number of elements stored in the hash table.
+     * @return
+     */
     public int size() {
+
         int size = 0;
 
         for (LinkedList<Entry<K, V>> list : table) {
@@ -132,7 +158,12 @@ public class HashTable<K, V> implements Iterable<V> {
         return size;
     }
 
+    /**
+     * Obtains the value at position zero of the hash table
+     * @return
+     */
     public V peek() {
+
         if (table[0].isEmpty()) {
             return null;
         }
@@ -141,7 +172,12 @@ public class HashTable<K, V> implements Iterable<V> {
         return table[0].peek().value();
     }
 
+    /**
+     * Checks if the hash table is empty
+     * @return
+     */
     public boolean isEmpty() {
+
         for (LinkedList<Entry<K, V>> list : table) {
             if (!list.isEmpty()) {
                 return false;
@@ -151,7 +187,7 @@ public class HashTable<K, V> implements Iterable<V> {
     }
 
     /**
-     *
+     * Allows to traverse the records in all the linked lists of the hash table sequentially.
      * @return
      */
     @Override

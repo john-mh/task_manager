@@ -12,15 +12,24 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+/**
+ * Structural testing class
+ */
 public class TaskManagerIT {
 
     private TaskManager taskManager;
 
+    /**
+     *
+     */
     @BeforeEach
     public void setUp() {
         taskManager = new TaskManager();
     }
 
+    /**
+     *
+     */
     @Test
     public void testCreateTask() {
         TodoItem task = taskManager.createTask("Test Task", "This is a test task.", LocalDateTime.now(), true);
@@ -31,9 +40,9 @@ public class TaskManagerIT {
         assertTrue(task.getPriority() == Priority.PRIORITY);
     }
 
-
-
-
+    /**
+     *
+     */
     @Test
     public void testCreateReminder() {
         TodoItem reminder = taskManager.createReminder("Test Reminder", "This is a test reminder.", LocalDateTime.now(), false);

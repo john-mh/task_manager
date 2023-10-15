@@ -13,6 +13,7 @@ public class Task extends TodoItem {
      * @param priority    The priority of the Todo item
      */
     public Task(String title, String description, LocalDateTime deadline, Priority priority) {
+
         super(title, description, deadline, priority);
     }
 }

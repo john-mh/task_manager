@@ -12,25 +12,25 @@ public class TaskManagerUI {
 
     public static void start() {
         System.out.println("\n==========================================================================");
-        System.out.println("=============== !Bienvenido al Administrador de Tareas! ==================");
+        System.out.println("=============== !Welcome to the Task Manager! ==================");
         System.out.println("==========================================================================\n");
 
         while (true) {
-            System.out.println("Opciones:");
-            System.out.println("1. Crear tarea");
-            System.out.println("2. Crear recordatorio");
-            System.out.println("3. Editar tarea");
-            System.out.println("4. Eliminar tarea");
-            System.out.println("5. Deshacer");
-            System.out.println("6. Salir");
-            System.out.print("Seleccione una opción: ");
+            System.out.println("Options:");
+            System.out.println("1. Create task");
+            System.out.println("2. Create reminder");
+            System.out.println("3. Edit task or reminder");
+            System.out.println("4. Delete task or reminder");
+            System.out.println("5. Undo");
+            System.out.println("6. Exit");
+            System.out.print("Select an option: ");
 
             int choice = sc.nextInt();
             sc.nextLine();
 
             while(choice < 1 || choice > 6) {
-                System.out.println("Opción inválida.");
-                System.out.print("Seleccione una opción: ");
+                System.out.println("Invalid option.");
+                System.out.print("Select an option: ");
                 choice = sc.nextInt();
                 sc.nextLine();
             }
@@ -45,7 +45,7 @@ public class TaskManagerUI {
                     exit();
                     return;
                 }
-                default -> System.out.println("Opción inválida.");
+                default -> System.out.println("Invalid option.");
             }
         }
     }
@@ -53,20 +53,20 @@ public class TaskManagerUI {
     public static void createTask() {
 
         System.out.println("\n==========================================================================");
-        System.out.println("=========================== Crear Tarea ==================================");
+        System.out.println("=========================== Create Task ==================================");
         System.out.println("==========================================================================\n");
 
-        System.out.print("Por favor ingrese el título de la tarea: ");
+        System.out.print("Please enter the title of the task: ");
         String title = sc.nextLine();
-        System.out.print("Por favor ingrese la descripción de la tarea: ");
+        System.out.print("Please enter the task description: ");
         String description = sc.nextLine();
-        System.out.print("Por favor ingrese la fecha límite de la tarea (AAAA-MM-DD HH:mm): ");
+        System.out.print("Please enter the task due date (YYYYY-MM-DD HH:mm): ");
         LocalDateTime deadline = LocalDateTime.parse(sc.nextLine());
-        System.out.print("¿La tarea tiene prioridad? (S/N): ");
+        System.out.print("Does the task have priority (Y/N): ");
 
         while (!sc.hasNext("[SsNn]")) {
-            System.out.println("Opción inválida.");
-            System.out.print("¿La tarea tiene prioridad? (S/N): ");
+            System.out.println("Invalid option.");
+            System.out.print("Does the task have priority (Y/N): ");
             sc.next();
         }
 
@@ -74,25 +74,25 @@ public class TaskManagerUI {
 
         taskManager.add(taskManager.createTask(title, description, deadline, hasPriority));
 
-        System.out.println("¡La tarea ha sido creada exitosamente!");
+        System.out.println("The task has been successfully created!");
     }
 
     private static void createReminder() {
         System.out.println("\n==========================================================================");
-        System.out.println("=========================== Crear Recordatorio ===========================");
+        System.out.println("=========================== Create Reminder ===========================");
         System.out.println("==========================================================================\n");
 
-        System.out.print("Por favor ingrese el título del recordatorio: ");
+        System.out.print("Please enter the title of the reminder: ");
         String title = sc.nextLine();
-        System.out.print("Por favor ingrese la descripción del recordatorio: ");
+        System.out.print("Please enter the description of the reminder: ");
         String description = sc.nextLine();
-        System.out.print("Por favor ingrese la fecha límite del recordatorio (AAAA-MM-DD HH:mm): ");
+        System.out.print("Please enter the reminder deadline date (YYYYY-MM-DD HH:mm): ");
         LocalDateTime deadline = LocalDateTime.parse(sc.nextLine());
-        System.out.print("¿El recordatorio tiene prioridad? (S/N): ");
+        System.out.print("Does the reminder have priority (Y/N): ");
 
         while (!sc.hasNext("[SsNn]")) {
-            System.out.println("Opción inválida.");
-            System.out.print("¿El recordatorio tiene prioridad? (S/N): ");
+            System.out.println("Invalid option.");
+            System.out.print("Does the reminder have priority (Y/N): ");
             sc.next();
         }
 
@@ -100,79 +100,79 @@ public class TaskManagerUI {
 
         taskManager.add(taskManager.createReminder(title, description, deadline, hasPriority));
 
-        System.out.println("¡El recordatorio ha sido creado exitosamente!");
+        System.out.println("The reminder has been successfully created!");
     }
 
     public static void editTask() {
         System.out.println("\n==========================================================================");
-        System.out.println("=========================== Editar Tarea =================================");
+        System.out.println("=========================== Edit Task and Reminder=================================");
         System.out.println("==========================================================================\n");
 
-        System.out.print("Por favor ingrese el título de la tarea a editar: ");
+        System.out.print("Please enter the title of the task to be edited: ");
         String taskTitle = sc.nextLine();
 
         List<?> tasks = taskManager.searchItem(taskTitle);
         int index = 0;
 
         if(tasks.isEmpty()) {
-            System.out.println("Tarea no encontrada.");
+            System.out.println("Task not found.");
         } else {
             printResults(tasks);
 
-            System.out.print("Por favor ingrese el índice de la tarea a editar: ");
+            System.out.print("Please enter the index of the task to be edited: ");
 
             index = sc.nextInt();
 
             while(index < 0 || index >= tasks.size()) {
-                System.out.println("Índice inválido.");
-                System.out.print("Por favor ingrese el índice de la tarea a editar: ");
+                System.out.println("Invalid index.");
+                System.out.print("Please enter the index of the task to be edited: ");
                 index = sc.nextInt();
             }
         }
 
-        System.out.print("Por favor ingrese el nuevo título de la tarea: ");
+        System.out.print("Please enter the new task title: ");
         String newTitle = sc.nextLine();
-        System.out.print("Por favor ingrese la nueva descripción de la tarea: ");
+        System.out.print("Please enter new task description: ");
         String newDescription = sc.nextLine();
-        System.out.print("Por favor ingrese la nueva fecha límite de la tarea (AAAA-MM-DD HH:mm): ");
+        System.out.print("Please enter the new task deadline (YYYYY-MM-DD HH:mm): ");
         LocalDateTime newDeadline = LocalDateTime.parse(sc.nextLine());
-        System.out.print("¿La tarea tiene prioridad? (S/N): ");
+        System.out.print("Does the task have priority (Y/N): ");
         boolean newHasPriority = sc.nextLine().equalsIgnoreCase("S");
 
         taskManager.edit(taskManager.getItem(tasks, index), taskManager.createTask(newTitle, newDescription, newDeadline, newHasPriority));
-        System.out.println("¡La tarea fue editada exitosamente!");
+        System.out.println("The task was successfully edited!");
 
     }
 
     public static void deleteTask() {
         System.out.println("\n==========================================================================");
-        System.out.println("=========================== Eliminar Tarea ===============================");
+        System.out.println("=========================== Delete Task or reminder===============================");
         System.out.println("==========================================================================\n");
 
-        System.out.print("Por favor ingrese el título de la tarea a eliminar: ");
+        System.out.print("Please enter the title of the task to be deleted: ");
         String taskTitle = sc.nextLine();
 
         List<?> tasks = taskManager.searchItem(taskTitle);
 
         if (tasks.isEmpty()) {
-            System.out.println("Tarea no encontrada.");
+            System.out.println("Task not found.");
         } else {
             printResults(tasks);
 
-            System.out.print("Por favor ingrese el índice de la tarea a eliminar: ");
+            System.out.print("Please enter the index of the task to be deleted: ");
 
             int index = sc.nextInt();
 
             while (index < 0 || index >= tasks.size()) {
-                System.out.println("Índice inválido.");
-                System.out.print("Por favor ingrese el índice de la tarea a eliminar: ");
+                System.out.println("Invalid index.");
+                System.out.print("Please enter the index of the task to be deleted: ");
                 index = sc.nextInt();
             }
 
-            // Verifica que la lista no esté vacía antes de intentar eliminar
+
             if (!taskManager.getTable().isEmpty()) {
                 taskManager.delete(taskManager.getItem(tasks, index));
-                System.out.println("¡La tarea fue eliminada exitosamente!");
+                System.out.println("The task was successfully eliminated!");
             }
         }
     }
@@ -184,16 +184,17 @@ public class TaskManagerUI {
         System.out.println("==========================================================================\n");
 
         taskManager.undo();
-        System.out.println("Operación deshecha.");
+        System.out.println("Operation undone.");
     }
 
     private static void exit() {
         System.out.println("\n==========================================================================");
-        System.out.println("===== Gracias por usar el Administrador de Tareas. ¡Hasta luego! =========");
+        System.out.println("===== Thank you for using the Task Manager, see you later! =========");
         System.out.println("==========================================================================\n");
     }
 
     private static void printResults(List<?> tasks) {
+
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println(i + ". " + tasks.get(i).toString());
         }
@@ -201,6 +202,7 @@ public class TaskManagerUI {
     }
 
     public static void main (String [] args){
+
         start();
     }
 }
