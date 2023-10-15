@@ -1,4 +1,4 @@
-package model;
+package src.model;
 
 import java.time.LocalDateTime;
 
@@ -80,5 +80,10 @@ public class TodoItem implements Comparable<TodoItem> {
     @Override
     public int compareTo(TodoItem other) {
         return Integer.compare(this.priority.getPriority(), other.priority.getPriority());
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

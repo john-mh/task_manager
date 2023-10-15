@@ -1,4 +1,4 @@
-package structures;
+package src.structures;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -18,11 +18,13 @@ public class HashTable<K, V> implements Iterable<V> {
         }
     }
 
+
+
     public K key(V value) {
         for (LinkedList<Entry<K, V>> list : table) {
             for (Entry<K, V> entry : list) {
-                if (entry.getValue().equals(value)) {
-                    return entry.getKey();
+                if (entry.value().equals(value)) {
+                    return entry.key();
                 }
             }
         }
@@ -34,7 +36,7 @@ public class HashTable<K, V> implements Iterable<V> {
 
         for (LinkedList<Entry<K, V>> list : table) {
             for (Entry<K, V> entry : list) {
-                values.add(entry.getValue());
+                values.add(entry.value());
             }
         }
 
@@ -66,7 +68,7 @@ public class HashTable<K, V> implements Iterable<V> {
         Entry<K, V> entryToRemove = null;
 
         for (Entry<K, V> entry : list) {
-            if (entry.getKey().equals(key)) {
+            if (entry.key().equals(key)) {
                 entryToRemove = entry;
                 break;
             }
@@ -86,8 +88,8 @@ public class HashTable<K, V> implements Iterable<V> {
         LinkedList<Entry<K, V>> list = table[index];
 
         for (Entry<K, V> entry : list) {
-            if (entry.getKey().equals(key)) {
-                return entry.getValue();
+            if (entry.key().equals(key)) {
+                return entry.value();
             }
         }
         return null;
@@ -137,7 +139,7 @@ public class HashTable<K, V> implements Iterable<V> {
 
             @Override
             public V next() {
-                return currentIterator.next().getValue();
+                return currentIterator.next().value();
             }
         };
     }

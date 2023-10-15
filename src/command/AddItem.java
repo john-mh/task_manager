@@ -1,7 +1,7 @@
-package command;
+package src.command;
 
-import model.TodoItem;
-import structures.HashTable;
+import src.model.TodoItem;
+import src.structures.HashTable;
 
 import java.util.UUID;
 

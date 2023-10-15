@@ -1,7 +1,7 @@
-package command;
+package src.command;
 
-import model.TodoItem;
-import structures.HashTable;
+import src.model.TodoItem;
+import src.structures.HashTable;
 
 public class EditItem implements Command {
 
@@ -12,27 +12,20 @@ public class EditItem implements Command {
 
 
     public EditItem(HashTable<String, TodoItem> table, TodoItem item, String key) {
-
         this.table = table;
         this.item = item;
         this.key = key;
         this.oldItem = table.get(key);
     }
 
-    public static TodoItem searchTaskByTitle(HashTable<String, TodoItem> table, String titleToEdit) {
-        return null;
-    }
-
     @Override
     public void execute() {
-
         table.remove(key);
         table.add(key, item);
     }
 
     @Override
     public void undo() {
-
         table.remove(key);
         table.add(key, oldItem);
     }

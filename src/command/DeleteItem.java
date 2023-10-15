@@ -1,7 +1,7 @@
-package command;
+package src.command;
 
-import structures.HashTable;
-import model.TodoItem;
+import src.structures.HashTable;
+import src.model.TodoItem;
 
 public class DeleteItem implements Command {
 
