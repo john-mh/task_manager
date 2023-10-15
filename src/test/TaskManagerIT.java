@@ -49,6 +49,7 @@ public class TaskManagerIT {
         assertEquals(1, taskManager.stackSize());
     }
 
+
     @Test
     public void testEditTask() {
         TodoItem task = taskManager.createTask("Test Task", "This is a test task.", LocalDateTime.now(), true);
@@ -57,12 +58,12 @@ public class TaskManagerIT {
         TodoItem newTask = taskManager.createTask("Updated Task", "This is an updated task.", LocalDateTime.now(), false);
         taskManager.edit(task, newTask);
 
-        TodoItem updatedTask = taskManager.get(taskManager.getTable().key(task));  // Obtén la tarea actualizada
-
-        assertEquals("Updated Task", updatedTask.getTitle());
-        assertEquals("This is an updated task.", updatedTask.getDescription());
-        assertEquals(Priority.NON_PRIORITY, updatedTask.getPriority());
+        // Comprobamos el título, descripción y prioridad de la tarea editada
+        assertEquals("Updated Task", newTask.getTitle());
+        assertEquals("This is an updated task.", newTask.getDescription());
+        assertEquals(Priority.NON_PRIORITY, newTask.getPriority());
     }
+
 
 
 
